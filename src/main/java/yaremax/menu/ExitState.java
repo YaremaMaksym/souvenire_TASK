@@ -1,5 +1,7 @@
 package yaremax.menu;
 
+import java.util.Scanner;
+
 public class ExitState implements MenuState {
     private final MenuManager menuManager;
 
@@ -13,7 +15,7 @@ public class ExitState implements MenuState {
     }
 
     @Override
-    public void handleInput(String input) {
+    public void handleInput(String input, Scanner scanner) {
 
     }
 }

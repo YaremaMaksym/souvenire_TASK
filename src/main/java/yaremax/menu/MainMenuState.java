@@ -1,5 +1,7 @@
 package yaremax.menu;
 
+import java.util.Scanner;
+
 public class MainMenuState implements MenuState {
     private final MenuManager menuManager;
 
@@ -20,7 +22,7 @@ public class MainMenuState implements MenuState {
     }
 
     @Override
-    public void handleInput(String input) {
+    public void handleInput(String input, Scanner scanner) {
         switch (Integer.parseInt(input)) {
             case 1 -> {}
             case 2 -> {}

@@ -1,6 +1,8 @@
 package yaremax.menu;
 
+import java.util.Scanner;
+
 public interface MenuState {
     void display();
-    void handleInput(String input);
+    void handleInput(String input, Scanner scanner);
 }

@@ -12,10 +12,14 @@ public class MenuManager {
     private final MenuState mainMenuState;
     private final MenuState exitState;
 
+    private final Scanner scanner;
+
     public MenuManager() {
         this.mainMenuState = new MainMenuState(this);
         this.exitState = new ExitState(this);
         this.currentState = mainMenuState;
+
+        this.scanner = new Scanner(System.in);
     }
 
     public void run() {
@@ -27,7 +31,8 @@ public class MenuManager {
                 break;
             }
             String choice = scanner.nextLine();
-            currentState.handleInput(choice);
+            currentState.handleInput(choice, scanner);
         }
+        scanner.close();
     }
 }
