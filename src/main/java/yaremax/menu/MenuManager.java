@@ -23,8 +23,6 @@ public class MenuManager {
     }
 
     public void run() {
-        Scanner scanner = new Scanner(System.in);
-
         while (true) {
             currentState.display();
             if (currentState instanceof ExitState) {
