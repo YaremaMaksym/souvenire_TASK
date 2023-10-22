@@ -17,19 +17,12 @@ public class ProducerDAO {
 
     private static final String PRODUCERS_FILE = "producers.json";
 
-    private Map<Long, Producer> producers = new HashMap<>();
-    private Long freeProducerIndex;
+    private List<Producer> producers = new ArrayList<>();
 
     public ProducerDAO() {
         if (new File(PRODUCERS_FILE).exists()) {
             try {
-                List<Producer> producersList = JsonUtils.readAllFromJson(PRODUCERS_FILE, new TypeToken<List<Producer>>() {
-                });
-
-                for (Producer producer : producersList) {
-                    producers.put(producer.getId(), producer);
-                }
-                freeProducerIndex = producersList.get(producersList.size() - 1).getId() + 1;
+                List<Producer> producersList = JsonUtils.readAllFromJson(PRODUCERS_FILE, new TypeToken<List<Producer>>() {});
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -41,30 +34,23 @@ public class ProducerDAO {
         return producerDaoInstance;
     }
 
-    public Map<Long, Producer> getAllProducers() {
-        return new HashMap<>(producers);
+    public List<Producer> getAllProducers() {
+        return new ArrayList<>(producers);
     }
 
     public void addProducer(Producer producer) {
-        producers.put(freeProducerIndex++, producer);
+        producers.add(producer);
         saveAllProducers();
     }
 
-    public void updateProducer(Producer producer, Long id) {
-        producers.put(id, producer);
-        saveAllProducers();
-    }
-
-    public void deleteProducerById(Long id) {
-        producers.remove(id);
+    public void deleteProducerById(Producer producer) {
+        producers.remove(producer);
         saveAllProducers();
     }
 
     private void saveAllProducers() {
-        List<Producer> producersList = new ArrayList<>(producers.values());
-
         try {
-            JsonUtils.writeAllToJson(producersList, PRODUCERS_FILE);
+            JsonUtils.writeAllToJson(producers, PRODUCERS_FILE);
         } catch (IOException e) {
             e.printStackTrace();
         }

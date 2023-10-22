@@ -16,19 +16,12 @@ public class SouvenirDAO {
 
     private static final String SOUVENIRS_FILE = "souvenirs.json";
 
-    private Map<Long, Souvenir> souvenirs = new HashMap<>();
-    private Long freeSouvenirIndex;
+    private List<Souvenir> souvenirs = new ArrayList<>();
 
     public SouvenirDAO() {
         if (new File(SOUVENIRS_FILE).exists()) {
             try {
-                List<Souvenir> souvenirsList = JsonUtils.readAllFromJson(SOUVENIRS_FILE, new TypeToken<List<Souvenir>>() {});
-
-                for (Souvenir souvenir : souvenirsList) {
-                    souvenirs.put(souvenir.getId(), souvenir);
-                }
-                freeSouvenirIndex = souvenirsList.get(souvenirsList.size() - 1).getId() + 1;
-
+                List<Souvenir> souvenirs = JsonUtils.readAllFromJson(SOUVENIRS_FILE, new TypeToken<List<Souvenir>>() {});
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -40,27 +33,22 @@ public class SouvenirDAO {
         return souvenirDaoInstance;
     }
 
-    public Map<Long, Souvenir> getAllSouvenirs() {
-        return new HashMap<>(souvenirs);
+    public List<Souvenir> getAllSouvenirs() {
+        return new ArrayList<>(souvenirs);
     }
 
     public void addSouvenir (Souvenir souvenir) {
-        souvenirs.put(freeSouvenirIndex++, souvenir);
+        souvenirs.add(souvenir);
         saveAllSouvenirs();
     }
 
-    public void updateSouvenir (Souvenir souvenir, Long id) {
-        souvenirs.put(id, souvenir);
-        saveAllSouvenirs();
-    }
-
-    public void deleteSouvenirById(Long id) {
-        souvenirs.remove(id);
+    public void deleteSouvenir(Souvenir souvenir) {
+        souvenirs.remove(souvenir);
         saveAllSouvenirs();
     }
 
     private void saveAllSouvenirs() {
-        List<Souvenir> souvenirsList = new ArrayList<>(souvenirs.values());
+        List<Souvenir> souvenirsList = new ArrayList<>(souvenirs);
 
         try {
             JsonUtils.writeAllToJson(souvenirsList, SOUVENIRS_FILE);

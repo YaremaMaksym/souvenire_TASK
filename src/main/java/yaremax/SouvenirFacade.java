@@ -11,7 +11,7 @@ public class SouvenirFacade {
     private SouvenirDAO souvenirDAO = SouvenirDAO.getInstance();
 
     public void addProducer(Producer producer) throws DuplicateResourceException {
-        for (Producer existingProducer : producerDAO.getAllProducers().values()) {
+        for (Producer existingProducer : producerDAO.getAllProducers()) {
             if (producer.getName().equals(existingProducer.getName())) {
                 throw new DuplicateResourceException("Producer with name \"" + producer.getName() + "\" already exits");
             }
@@ -25,7 +25,7 @@ public class SouvenirFacade {
     }
 
     public void addSouvenir(Souvenir souvenir) {
-        for (Souvenir existingSouvenir : souvenirDAO.getAllSouvenirs().values()) {
+        for (Souvenir existingSouvenir : souvenirDAO.getAllSouvenirs()) {
             if (souvenir.getName().equals(existingSouvenir.getName()) &&
                 souvenir.getProducerName().equals(existingSouvenir.getProducerName())) {
                 throw new DuplicateResourceException("Producer with name \"" + souvenir.getProducerName() + "\" already has souvenir");
