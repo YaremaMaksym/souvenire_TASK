@@ -13,8 +13,8 @@ public class MainMenuState implements MenuState {
     public void display() {
         System.out.println("""
                 \n
-                Main Menu:
-                1️⃣ - 
+                Головне меню:
+                1️⃣ - Меню виробників та сувенірів
                 2️⃣ - 
                 3️⃣ - 
                 4️⃣ - Exit
@@ -24,7 +24,7 @@ public class MainMenuState implements MenuState {
     @Override
     public void handleInput(String input, Scanner scanner) {
         switch (Integer.parseInt(input)) {
-            case 1 -> {}
+            case 1 -> menuManager.setCurrentState(menuManager.getProducerSouvenirMenuState());
             case 2 -> {}
             case 3 -> {}
             case 4 -> menuManager.setCurrentState(menuManager.getExitState());
