@@ -1,4 +1,4 @@
-package yaremax.singletones;
+package yaremax.dao;
 
 import com.google.gson.reflect.TypeToken;
 import yaremax.dto.Souvenir;
@@ -7,9 +7,7 @@ import yaremax.util.JsonUtils;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class SouvenirDAO {
     private static final SouvenirDAO souvenirDaoInstance = new SouvenirDAO();

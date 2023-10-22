@@ -3,8 +3,8 @@ package yaremax;
 import yaremax.dto.Producer;
 import yaremax.dto.Souvenir;
 import yaremax.exception.DuplicateResourceException;
-import yaremax.singletones.ProducerDAO;
-import yaremax.singletones.SouvenirDAO;
+import yaremax.dao.ProducerDAO;
+import yaremax.dao.SouvenirDAO;
 
 public class SouvenirFacade {
     private ProducerDAO producerDAO = ProducerDAO.getInstance();
