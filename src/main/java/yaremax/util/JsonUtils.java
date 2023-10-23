@@ -1,16 +1,20 @@
 package yaremax.util;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import yaremax.dto.IDto;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 public class JsonUtils {
-    private static final Gson GSON = new Gson();
+    private static final Gson GSON = new GsonBuilder()
+            .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+            .create();
 
     public static <T extends IDto> List<T> readAllFromJson(String filename, TypeToken<List<T>> typeToken) throws IOException {
         String content = new String(Files.readAllBytes(Paths.get(filename)));

@@ -19,7 +19,7 @@ public class SouvenirDAO {
     public SouvenirDAO() {
         if (new File(SOUVENIRS_FILE).exists()) {
             try {
-                List<Souvenir> souvenirs = JsonUtils.readAllFromJson(SOUVENIRS_FILE, new TypeToken<List<Souvenir>>() {});
+                souvenirs = JsonUtils.readAllFromJson(SOUVENIRS_FILE, new TypeToken<List<Souvenir>>() {});
             } catch (IOException e) {
                 e.printStackTrace();
             }

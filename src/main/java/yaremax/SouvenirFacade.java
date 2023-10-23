@@ -34,7 +34,7 @@ public class SouvenirFacade {
     }
     public void editSouvenir(Souvenir souvenir) {}
     public void viewAllSouvenirs() {
-        System.out.println(producerDAO.getAllProducers());
+        System.out.println(souvenirDAO.getAllSouvenirs());
     }
 
     public void viewSouvenirsByManufacturer(String manufacturerName) {}

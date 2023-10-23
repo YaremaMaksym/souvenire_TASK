@@ -19,7 +19,7 @@ public class ProducerDAO {
     public ProducerDAO() {
         if (new File(PRODUCERS_FILE).exists()) {
             try {
-                List<Producer> producersList = JsonUtils.readAllFromJson(PRODUCERS_FILE, new TypeToken<List<Producer>>() {});
+                producers = JsonUtils.readAllFromJson(PRODUCERS_FILE, new TypeToken<List<Producer>>() {});
 
             } catch (IOException e) {
                 e.printStackTrace();

@@ -68,7 +68,7 @@ public class ProducerSouvenirMenuState implements MenuState {
         String producerName = in.nextLine();
 
         System.out.print("Введіть дату створення (дд-мм-рррр): ");
-        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy").withLocale(Locale.UK);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy").withLocale(Locale.UK);
         LocalDate releaseDate = LocalDate.parse(in.nextLine(), formatter);
 
         System.out.print("Введіть ціну сувеніру: ");
