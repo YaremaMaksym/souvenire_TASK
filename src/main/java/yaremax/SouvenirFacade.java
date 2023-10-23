@@ -5,6 +5,9 @@ import yaremax.dto.Souvenir;
 import yaremax.exception.DuplicateResourceException;
 import yaremax.dao.ProducerDAO;
 import yaremax.dao.SouvenirDAO;
+import yaremax.exception.ResourceNotFoundException;
+
+import java.util.List;
 
 public class SouvenirFacade {
     private ProducerDAO producerDAO = ProducerDAO.getInstance();
@@ -28,6 +31,12 @@ public class SouvenirFacade {
         for (Souvenir existingSouvenir : souvenirDAO.getAllSouvenirs()) {
             if (souvenir.equals(existingSouvenir)) {
                 throw new DuplicateResourceException("This souvenir already exists");
+            }
+        }
+        List<Producer> producers = producerDAO.getAllProducers();
+        for (Producer producer : producers) {
+            if (souvenir.getProducerName().equals(producer.getName())) {
+                throw new ResourceNotFoundException("This company doesn't exists");
             }
         }
         souvenirDAO.addSouvenir(souvenir);
