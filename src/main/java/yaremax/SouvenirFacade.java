@@ -80,5 +80,14 @@ public class SouvenirFacade {
     }
 
     public void deleteProducerAndSouvenirs(String producerName) {
+        List<Souvenir> souvenirsByProducer = souvenirDAO.getAllSouvenirs().stream()
+                .filter(souvenir -> souvenir.getProducerName().equals(producerName))
+                .toList();
+
+        for (Souvenir souvenir : souvenirsByProducer) {
+            souvenirDAO.deleteSouvenir(souvenir);
+        }
+
+        producerDAO.deleteProducerById(producerDAO.getProducerByName(producerName));
     }
 }
