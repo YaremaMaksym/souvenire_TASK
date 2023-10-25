@@ -7,7 +7,10 @@ import yaremax.dao.ProducerDAO;
 import yaremax.dao.SouvenirDAO;
 import yaremax.exception.ResourceNotFoundException;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class SouvenirFacade {
     private ProducerDAO producerDAO = ProducerDAO.getInstance();
@@ -46,9 +49,30 @@ public class SouvenirFacade {
         System.out.println(souvenirDAO.getAllSouvenirs());
     }
 
-    public void viewSouvenirsByManufacturer(String manufacturerName) {}
-    public void viewSouvenirsByCountry(String country) {}
-    public void viewManufacturersByPriceLimit(double priceLimit) {}
+    public void viewSouvenirsByProducer(String producerName) {
+        List<Souvenir> souvenirsByProducer = souvenirDAO.getAllSouvenirs().stream()
+                .filter(souvenir -> souvenir.getProducerName().equals(producerName))
+                .toList();
+    }
+    public void viewSouvenirsByCountry(String country) {
+        List<Souvenir> souvenirsByCountry = souvenirDAO.getAllSouvenirs().stream()
+                .filter(souvenir -> {
+                    Producer producer = producerDAO.getProducerByName(souvenir.getProducerName());
+                    return producer.getCountry().equals(country);
+                })
+                .toList();
+    }
+    public void viewProducersByPriceLimit(double priceLimit) {
+        List<Producer> producersByPriceLimit = producerDAO.getAllProducers().stream()
+                .filter(p -> {
+                    Long num = souvenirDAO.getAllSouvenirs().stream()
+                            .filter(souvenir -> souvenir.getProducerName().equals(p.getName()))
+                            .filter(s -> s.getPrice() < priceLimit)
+                            .count();
+                    return num > 0;
+                })
+                .toList();
+    }
     public void viewSouvenirsByYear(int year) {}
 
     public void deleteProducerAndSouvenirs(String producerName) {

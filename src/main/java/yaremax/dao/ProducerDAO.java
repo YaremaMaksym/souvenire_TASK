@@ -35,6 +35,10 @@ public class ProducerDAO {
         return new ArrayList<>(producers);
     }
 
+    public Producer getProducerByName(String name) {
+        return producers.stream().filter(p -> p.getName().equals(name)).findFirst().get();
+    }
+
     public void addProducer(Producer producer) {
         producers.add(producer);
         saveAllProducers();
