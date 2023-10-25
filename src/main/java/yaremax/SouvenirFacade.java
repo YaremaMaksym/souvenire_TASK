@@ -65,7 +65,7 @@ public class SouvenirFacade {
     public void viewProducersByPriceLimit(double priceLimit) {
         List<Producer> producersByPriceLimit = producerDAO.getAllProducers().stream()
                 .filter(p -> {
-                    Long num = souvenirDAO.getAllSouvenirs().stream()
+                    long num = souvenirDAO.getAllSouvenirs().stream()
                             .filter(souvenir -> souvenir.getProducerName().equals(p.getName()))
                             .filter(s -> s.getPrice() < priceLimit)
                             .count();
@@ -73,7 +73,11 @@ public class SouvenirFacade {
                 })
                 .toList();
     }
-    public void viewSouvenirsByYear(int year) {}
+    public void viewSouvenirsByYear(int year) {
+        List<Souvenir> souvenirsByYear = souvenirDAO.getAllSouvenirs().stream()
+                .filter(s -> s.getReleaseDate().getYear() == year)
+                .toList();
+    }
 
     public void deleteProducerAndSouvenirs(String producerName) {
     }
