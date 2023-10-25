@@ -2,12 +2,14 @@ package yaremax.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
 @AllArgsConstructor
 @Getter
+@ToString
 public class Souvenir implements IDto{
     private String name;
     private String producerName;
