@@ -13,26 +13,23 @@ public class MenuManager {
     private final MenuState producerSouvenirMenuState;
     private final MenuState exitState;
 
-    private final Scanner scanner;
-
     public MenuManager() {
         this.mainMenuState = new MainMenuState(this);
         this.producerSouvenirMenuState = new ProducerSouvenirMenuState(this);
         this.exitState = new ExitState(this);
         this.currentState = mainMenuState;
-
-        this.scanner = new Scanner(System.in);
     }
 
     public void run() {
+        Scanner in = new Scanner(System.in);
         while (true) {
             currentState.display();
             if (currentState instanceof ExitState) {
                 break;
             }
-            String choice = scanner.nextLine();
-            currentState.handleInput(choice, scanner);
+            String choice = in.nextLine();
+            currentState.handleInput(choice);
         }
-        scanner.close();
+        in.close();
     }
 }

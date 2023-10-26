@@ -22,7 +22,7 @@ public class MainMenuState implements MenuState {
     }
 
     @Override
-    public void handleInput(String input, Scanner scanner) {
+    public void handleInput(String input) {
         switch (Integer.parseInt(input)) {
             case 1 -> menuManager.setCurrentState(menuManager.getProducerSouvenirMenuState());
             case 2 -> {}

@@ -35,24 +35,24 @@ public class ProducerSouvenirMenuState implements MenuState {
     }
 
     @Override
-    public void handleInput(String input, Scanner scanner) {
+    public void handleInput(String input) {
         switch (Integer.parseInt(input)) {
             case 1 -> souvenirFacade.viewAllProducer();
             case 2 -> {
-                Producer producer = inputProducer(scanner);
+                Producer producer = inputProducer();
                 souvenirFacade.addProducer(producer);
             }
             case 3 -> {
-                Producer producer = inputProducer(scanner);
+                Producer producer = inputProducer();
                 souvenirFacade.editProducer(producer);
             }
             case 4 -> souvenirFacade.viewAllSouvenirs();
             case 5 -> {
-                Souvenir souvenir = inputSouvenir(scanner);
+                Souvenir souvenir = inputSouvenir();
                 souvenirFacade.addSouvenir(souvenir);
             }
             case 6 -> {
-                Souvenir souvenir = inputSouvenir(scanner);
+                Souvenir souvenir = inputSouvenir();
                 souvenirFacade.editSouvenir(souvenir);
             }
             case 7 -> menuManager.setCurrentState(menuManager.getMainMenuState());
@@ -60,7 +60,8 @@ public class ProducerSouvenirMenuState implements MenuState {
         }
     }
 
-    private static Souvenir inputSouvenir(Scanner in) {
+    private static Souvenir inputSouvenir() {
+        Scanner in = new Scanner(System.in);
         System.out.print("Введіть ім'я сувеніру: ");
         String name = in.nextLine();
 
@@ -74,16 +75,19 @@ public class ProducerSouvenirMenuState implements MenuState {
         System.out.print("Введіть ціну сувеніру: ");
         Double price = in.nextDouble();
 
+        in.close();
         return new Souvenir(name, producerName, releaseDate, price);
     }
 
-    private static Producer inputProducer(Scanner in) {
+    private static Producer inputProducer() {
+        Scanner in = new Scanner(System.in);
         System.out.print("Введіть ім'я виробника: ");
         String name = in.nextLine();
 
         System.out.print("Введіть країну виробника: ");
         String country = in.nextLine();
 
+        in.close();
         return new Producer(name, country);
     }
 

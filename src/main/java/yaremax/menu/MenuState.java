@@ -4,5 +4,5 @@ import java.util.Scanner;
 
 public interface MenuState {
     void display();
-    void handleInput(String input, Scanner scanner);
+    void handleInput(String input);
 }
