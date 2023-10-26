@@ -7,9 +7,8 @@ import yaremax.dao.ProducerDAO;
 import yaremax.dao.SouvenirDAO;
 import yaremax.exception.ResourceNotFoundException;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class SouvenirFacade {
@@ -27,7 +26,7 @@ public class SouvenirFacade {
     public void editProducer(Producer producer) {
     }
     public void viewAllProducer() {
-        System.out.println(producerDAO.getAllProducers());
+        producerDAO.getAllProducers().forEach(System.out::println);
     }
 
     public void addSouvenir(Souvenir souvenir) {
@@ -37,16 +36,16 @@ public class SouvenirFacade {
             }
         }
         List<Producer> producers = producerDAO.getAllProducers();
-        for (Producer producer : producers) {
-            if (souvenir.getProducerName().equals(producer.getName())) {
-                throw new ResourceNotFoundException("This company doesn't exists");
-            }
+
+        // todo: add optional
+        if (producerDAO.getProducerByName(souvenir.getProducerName()) == null) {
+            throw new ResourceNotFoundException("This company doesn't exists");
         }
         souvenirDAO.addSouvenir(souvenir);
     }
     public void editSouvenir(Souvenir souvenir) {}
     public void viewAllSouvenirs() {
-        System.out.println(souvenirDAO.getAllSouvenirs());
+        souvenirDAO.getAllSouvenirs().forEach(System.out::println);
     }
 
     public void viewSouvenirsByProducer(String producerName) {
