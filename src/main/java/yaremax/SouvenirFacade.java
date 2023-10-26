@@ -6,6 +6,7 @@ import yaremax.exception.DuplicateResourceException;
 import yaremax.dao.ProducerDAO;
 import yaremax.dao.SouvenirDAO;
 import yaremax.exception.ResourceNotFoundException;
+import yaremax.util.TablePrinter;
 
 import java.util.List;
 import java.util.Map;
@@ -25,8 +26,8 @@ public class SouvenirFacade {
     }
     public void editProducer(Producer producer) {
     }
-    public void viewAllProducer() {
-        producerDAO.getAllProducers().forEach(System.out::println);
+    public void viewAllProducers() {
+        TablePrinter.displayProducersTable(producerDAO.getAllProducers());
     }
 
     public void addSouvenir(Souvenir souvenir) {
@@ -45,13 +46,14 @@ public class SouvenirFacade {
     }
     public void editSouvenir(Souvenir souvenir) {}
     public void viewAllSouvenirs() {
-        souvenirDAO.getAllSouvenirs().forEach(System.out::println);
+        TablePrinter.displaySouvenirsTable(souvenirDAO.getAllSouvenirs());
     }
 
     public void viewSouvenirsByProducer(String producerName) {
         List<Souvenir> souvenirsByProducer = souvenirDAO.getAllSouvenirs().stream()
                 .filter(souvenir -> souvenir.getProducerName().equals(producerName))
                 .toList();
+        TablePrinter.displaySouvenirsTable(souvenirsByProducer);
     }
     public void viewSouvenirsByCountry(String country) {
         List<Souvenir> souvenirsByCountry = souvenirDAO.getAllSouvenirs().stream()
@@ -60,6 +62,7 @@ public class SouvenirFacade {
                     return producer.getCountry().equals(country);
                 })
                 .toList();
+        TablePrinter.displaySouvenirsTable(souvenirsByCountry);
     }
     public void viewProducersByPriceLimit(double priceLimit) {
         List<Producer> producersByPriceLimit = producerDAO.getAllProducers().stream()
@@ -71,6 +74,7 @@ public class SouvenirFacade {
                     return num > 0;
                 })
                 .toList();
+        TablePrinter.displayProducersTable(producersByPriceLimit);
     }
     public void viewSouvenirsByProducers() {
         Map<Producer, List<Souvenir>> souvenirsByProducer = souvenirDAO.getAllSouvenirs().stream()
@@ -82,6 +86,7 @@ public class SouvenirFacade {
             System.out.println("Souvenirs:");
             entry.getValue().forEach(System.out::println);
         }
+        // todo: output
     }
     public void viewProducersBySouvenir(String souvenirName, int year) {
         List<Producer> producersBySouvenir = souvenirDAO.getAllSouvenirs().stream()
@@ -90,7 +95,7 @@ public class SouvenirFacade {
                 .map(souvenir -> producerDAO.getProducerByName(souvenir.getProducerName()))
                 .distinct()
                 .toList();
-        producersBySouvenir.forEach(System.out::println);
+        TablePrinter.displayProducersTable(producersBySouvenir);
     }
     public void viewSouvenirsByYears() {
         Map<Integer, List<Souvenir>> souvenirsByYears = souvenirDAO.getAllSouvenirs().stream()
@@ -100,6 +105,7 @@ public class SouvenirFacade {
             System.out.println(entry.getKey());
             entry.getValue().forEach(System.out::println);
         }
+        // todo: output
     }
 
     public void deleteProducerAndSouvenirs(String producerName) {

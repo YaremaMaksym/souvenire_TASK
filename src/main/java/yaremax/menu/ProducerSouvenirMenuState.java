@@ -37,7 +37,7 @@ public class ProducerSouvenirMenuState implements MenuState {
     @Override
     public void handleInput(String input) {
         switch (Integer.parseInt(input)) {
-            case 1 -> souvenirFacade.viewAllProducer();
+            case 1 -> souvenirFacade.viewAllProducers();
             case 2 -> {
                 Producer producer = inputProducer();
                 souvenirFacade.addProducer(producer);
