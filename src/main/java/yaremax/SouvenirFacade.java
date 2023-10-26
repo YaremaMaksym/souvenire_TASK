@@ -83,6 +83,15 @@ public class SouvenirFacade {
             entry.getValue().forEach(System.out::println);
         }
     }
+    public void viewProducersBySouvenir(String souvenirName, int year) {
+        List<Producer> producersBySouvenir = souvenirDAO.getAllSouvenirs().stream()
+                .filter(souvenir -> souvenir.getName().equals(souvenirName))
+                .filter(souvenir -> souvenir.getReleaseDate().getYear() == year)
+                .map(souvenir -> producerDAO.getProducerByName(souvenir.getProducerName()))
+                .distinct()
+                .toList();
+        producersBySouvenir.forEach(System.out::println);
+    }
     public void viewSouvenirsByYears() {
         Map<Integer, List<Souvenir>> souvenirsByYears = souvenirDAO.getAllSouvenirs().stream()
                 .collect(Collectors.groupingBy(souvenir -> souvenir.getReleaseDate().getYear()));
