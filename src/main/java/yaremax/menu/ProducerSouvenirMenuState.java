@@ -35,60 +35,70 @@ public class ProducerSouvenirMenuState implements MenuState {
     }
 
     @Override
-    public void handleInput(String input) {
-        switch (Integer.parseInt(input)) {
+    public void handleInput() {
+        Scanner scanner = new Scanner(System.in);
+        int choice = Integer.parseInt(scanner.nextLine());
+
+        switch (choice) {
             case 1 -> souvenirFacade.viewAllProducers();
             case 2 -> {
-                Producer producer = inputProducer();
+                Producer producer = inputProducer(scanner);
                 souvenirFacade.addProducer(producer);
             }
             case 3 -> {
-                Producer producer = inputProducer();
-                souvenirFacade.editProducer(producer);
+                System.out.print("Введіть id виробника, який ви хочете змінити: ");
+                Long id = Long.parseLong(scanner.nextLine());
+                Producer producer = inputProducer(scanner);
+                souvenirFacade.editProducer(id, producer);
             }
             case 4 -> souvenirFacade.viewAllSouvenirs();
             case 5 -> {
-                Souvenir souvenir = inputSouvenir();
+                Souvenir souvenir = inputSouvenir(scanner);
                 souvenirFacade.addSouvenir(souvenir);
             }
             case 6 -> {
-                Souvenir souvenir = inputSouvenir();
-                souvenirFacade.editSouvenir(souvenir);
+                System.out.print("Введіть id сувеніра, який ви хочете змінити: ");
+                Long id = Long.parseLong(scanner.nextLine());
+                Souvenir souvenir = inputSouvenir(scanner);
+                souvenirFacade.editSouvenir(id, souvenir);
             }
             case 7 -> menuManager.setCurrentState(menuManager.getMainMenuState());
-            default -> System.out.println(input + " not a valid option");
+            default -> System.out.println(choice + " not a valid option");
         }
     }
 
-    private static Souvenir inputSouvenir() {
-        Scanner in = new Scanner(System.in);
-        System.out.print("Введіть ім'я сувеніру: ");
-        String name = in.nextLine();
-
+    private static Producer inputProducer(Scanner scanner) {
         System.out.print("Введіть ім'я виробника: ");
-        String producerName = in.nextLine();
+        String name = scanner.nextLine();
+
+        System.out.print("Введіть країну виробника: ");
+        String country = scanner.nextLine();
+
+        return Producer.builder()
+                .name(name)
+                .country(country)
+                .build();
+    }
+
+    private static Souvenir inputSouvenir(Scanner scanner) {
+        System.out.print("Введіть ім'я сувеніру: ");
+        String name = scanner.nextLine();
+
+        System.out.print("Введіть id виробника: ");
+        Long producerId = Long.parseLong(scanner.nextLine());
 
         System.out.print("Введіть дату створення (дд-мм-рррр): ");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy").withLocale(Locale.UK);
-        LocalDate releaseDate = LocalDate.parse(in.nextLine(), formatter);
+        LocalDate releaseDate = LocalDate.parse(scanner.nextLine(), formatter);
 
         System.out.print("Введіть ціну сувеніру: ");
-        Double price = in.nextDouble();
+        Double price = scanner.nextDouble();
 
-        in.close();
-        return new Souvenir(name, producerName, releaseDate, price);
+        return Souvenir.builder()
+                .name(name)
+                .producerId(producerId)
+                .releaseDate(releaseDate)
+                .price(price)
+                .build();
     }
-
-    private static Producer inputProducer() {
-        Scanner in = new Scanner(System.in);
-        System.out.print("Введіть ім'я виробника: ");
-        String name = in.nextLine();
-
-        System.out.print("Введіть країну виробника: ");
-        String country = in.nextLine();
-
-        in.close();
-        return new Producer(name, country);
-    }
-
 }

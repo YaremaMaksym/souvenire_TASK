@@ -10,6 +10,7 @@ import yaremax.util.TablePrinter;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class SouvenirFacade {
@@ -33,14 +34,12 @@ public class SouvenirFacade {
     public void addSouvenir(Souvenir souvenir) {
         for (Souvenir existingSouvenir : souvenirDAO.getAllSouvenirs()) {
             if (souvenir.equals(existingSouvenir)) {
-                throw new DuplicateResourceException("This souvenir already exists");
+                throw new DuplicateResourceException("Souvenir with this params already exists");
             }
         }
-        List<Producer> producers = producerDAO.getAllProducers();
-
-        // todo: add optional
-        if (producerDAO.getProducerByName(souvenir.getProducerName()) == null) {
-            throw new ResourceNotFoundException("This company doesn't exists");
+        Optional<Producer> optionalProducer = producerDAO.getProducerById(souvenir.getProducerId());
+        if (optionalProducer.isEmpty()) {
+            throw new ResourceNotFoundException("Producer with id \"" + souvenir.getProducerId() + "\" doesn't exists");
         }
         souvenirDAO.addSouvenir(souvenir);
     }
@@ -49,16 +48,16 @@ public class SouvenirFacade {
         TablePrinter.displaySouvenirsTable(souvenirDAO.getAllSouvenirs());
     }
 
-    public void viewSouvenirsByProducer(String producerName) {
+    public void viewSouvenirsByProducer(Long producerId) {
         List<Souvenir> souvenirsByProducer = souvenirDAO.getAllSouvenirs().stream()
-                .filter(souvenir -> souvenir.getProducerName().equals(producerName))
+                .filter(souvenir -> souvenir.getProducerId().equals(producerId))
                 .toList();
         TablePrinter.displaySouvenirsTable(souvenirsByProducer);
     }
     public void viewSouvenirsByCountry(String country) {
         List<Souvenir> souvenirsByCountry = souvenirDAO.getAllSouvenirs().stream()
                 .filter(souvenir -> {
-                    Producer producer = producerDAO.getProducerByName(souvenir.getProducerName());
+                    Producer producer = producerDAO.getProducerById(souvenir.getProducerId()).get();
                     return producer.getCountry().equals(country);
                 })
                 .toList();
@@ -68,7 +67,7 @@ public class SouvenirFacade {
         List<Producer> producersByPriceLimit = producerDAO.getAllProducers().stream()
                 .filter(p -> {
                     long num = souvenirDAO.getAllSouvenirs().stream()
-                            .filter(souvenir -> souvenir.getProducerName().equals(p.getName()))
+                            .filter(s -> s.getProducerId().equals(p.getId()))
                             .filter(s -> s.getPrice() < priceLimit)
                             .count();
                     return num > 0;
@@ -78,7 +77,7 @@ public class SouvenirFacade {
     }
     public void viewSouvenirsByProducers() {
         Map<Producer, List<Souvenir>> souvenirsByProducer = souvenirDAO.getAllSouvenirs().stream()
-                .collect(Collectors.groupingBy(souvenir -> producerDAO.getProducerByName(souvenir.getProducerName())));
+                .collect(Collectors.groupingBy(souvenir -> producerDAO.getProducerById(souvenir.getProducerId()).get()));
 
         for (Map.Entry<Producer, List<Souvenir>> entry : souvenirsByProducer.entrySet()) {
             System.out.println("\n\nProducer:");
@@ -92,7 +91,7 @@ public class SouvenirFacade {
         List<Producer> producersBySouvenir = souvenirDAO.getAllSouvenirs().stream()
                 .filter(souvenir -> souvenir.getName().equals(souvenirName))
                 .filter(souvenir -> souvenir.getReleaseDate().getYear() == year)
-                .map(souvenir -> producerDAO.getProducerByName(souvenir.getProducerName()))
+                .map(souvenir -> producerDAO.getProducerById(souvenir.getProducerId()).get())
                 .distinct()
                 .toList();
         TablePrinter.displayProducersTable(producersBySouvenir);
@@ -108,15 +107,15 @@ public class SouvenirFacade {
         // todo: output
     }
 
-    public void deleteProducerAndSouvenirs(String producerName) {
+    public void deleteProducerAndSouvenirs(Long producerId) {
         List<Souvenir> souvenirsByProducer = souvenirDAO.getAllSouvenirs().stream()
-                .filter(souvenir -> souvenir.getProducerName().equals(producerName))
+                .filter(souvenir -> souvenir.getProducerId().equals(producerId))
                 .toList();
 
         for (Souvenir souvenir : souvenirsByProducer) {
-            souvenirDAO.deleteSouvenir(souvenir);
+            souvenirDAO.deleteSouvenir(souvenir.getId());
         }
 
-        producerDAO.deleteProducerById(producerDAO.getProducerByName(producerName));
+        producerDAO.deleteProducerById(producerId);
     }
 }

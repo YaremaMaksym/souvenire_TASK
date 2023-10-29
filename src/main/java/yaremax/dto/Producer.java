@@ -1,15 +1,18 @@
 package yaremax.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
 import java.util.Objects;
 
 @AllArgsConstructor
+@Builder
 @Getter
 @ToString
 public class Producer implements IDto {
+    private Long id;
     private String name;
     private String country;
 

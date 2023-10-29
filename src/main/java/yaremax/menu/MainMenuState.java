@@ -36,9 +36,9 @@ public class MainMenuState implements MenuState {
         switch (Integer.parseInt(input)) {
             case 1 -> menuManager.setCurrentState(menuManager.getProducerSouvenirMenuState());
             case 2 -> {
-                System.out.print("Enter producer name: ");
-                String producerName = in.nextLine();
-                souvenirFacade.viewSouvenirsByProducer(producerName);
+                System.out.print("Enter producer id: ");
+                Long producerId = Long.parseLong(in.nextLine());
+                souvenirFacade.viewSouvenirsByProducer(producerId);
             }
             case 3 -> {
                 System.out.print("Enter country: ");
@@ -62,9 +62,9 @@ public class MainMenuState implements MenuState {
             }
             case 7 -> souvenirFacade.viewSouvenirsByYears();
             case 8 -> {
-                System.out.print("Enter producer name: ");
-                String producerName = in.nextLine();
-                souvenirFacade.deleteProducerAndSouvenirs(producerName);
+                System.out.print("Enter id of the producer you want to delete: ");
+                Long producerId = Long.parseLong(in.nextLine());
+                souvenirFacade.deleteProducerAndSouvenirs(producerId);
             }
             case 9 -> menuManager.setCurrentState(menuManager.getExitState());
             default -> System.out.println(input + " not a valid option");
