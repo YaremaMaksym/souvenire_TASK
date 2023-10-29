@@ -117,12 +117,9 @@ public class SouvenirFacade {
                 .collect(Collectors.groupingBy(souvenir -> producerDAO.getProducerById(souvenir.getProducerId()).get()));
 
         for (Map.Entry<Producer, List<Souvenir>> entry : souvenirsByProducer.entrySet()) {
-            System.out.println("\n\nProducer:");
-            System.out.println(entry.getKey());
-            System.out.println("Souvenirs:");
-            entry.getValue().forEach(System.out::println);
+            System.out.println("\n\nProducer: " + entry.getKey());
+            TablePrinter.displaySouvenirsTable(entry.getValue());
         }
-        // todo: output
     }
     public void viewProducersBySouvenir(String souvenirName, int year) {
         List<Producer> producersBySouvenir = souvenirDAO.getAllSouvenirs().stream()
@@ -138,10 +135,9 @@ public class SouvenirFacade {
                 .collect(Collectors.groupingBy(souvenir -> souvenir.getReleaseDate().getYear()));
 
         for (Map.Entry<Integer, List<Souvenir>> entry : souvenirsByYears.entrySet()) {
-            System.out.println(entry.getKey());
-            entry.getValue().forEach(System.out::println);
+            System.out.println("\n\n Year: " + entry.getKey());
+            TablePrinter.displaySouvenirsTable(entry.getValue());
         }
-        // todo: output
     }
 
     public void deleteProducerAndSouvenirs(Long producerId) {
