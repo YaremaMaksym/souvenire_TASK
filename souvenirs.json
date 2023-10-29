@@ -1,0 +1,72 @@
+[
+  {
+    "id": 0,
+    "name": "Finnish Keychain",
+    "producerId": 0,
+    "releaseDate": "2005-08-23",
+    "price": 5.99
+  },
+  {
+    "id": 1,
+    "name": "Amazon Rainforest Magnet",
+    "producerId": 1,
+    "releaseDate": "2007-03-15",
+    "price": 3.49
+  },
+  {
+    "id": 2,
+    "name": "Hollywood Sign Miniature",
+    "producerId": 2,
+    "releaseDate": "2008-11-02",
+    "price": 7.99
+  },
+  {
+    "id": 3,
+    "name": "Norwegian Fjord Painting",
+    "producerId": 3,
+    "releaseDate": "2006-06-12",
+    "price": 12.95
+  },
+  {
+    "id": 4,
+    "name": "Kangaroo Plush Toy",
+    "producerId": 4,
+    "releaseDate": "2010-02-28",
+    "price": 9.991
+  },
+  {
+    "id": 5,
+    "name": "Traditional German Beer Stein",
+    "producerId": 5,
+    "releaseDate": "2009-07-19",
+    "price": 14.95
+  },
+  {
+    "id": 6,
+    "name": "Tokyo Skyline Puzzle",
+    "producerId": 6,
+    "releaseDate": "2012-04-05",
+    "price": 6.49
+  },
+  {
+    "id": 7,
+    "name": "Dutch Windmill Snow Globe",
+    "producerId": 7,
+    "releaseDate": "2011-10-09",
+    "price": 8.75
+  },
+  {
+    "id": 8,
+    "name": "Maple Leaf Keychain",
+    "producerId": 8,
+    "releaseDate": "2013-09-14",
+    "price": 4.99
+  },
+  {
+    "id": 9,
+    "name": "sassy",
+    "producerId": 12,
+    "releaseDate": "2004-05-01",
+    "price": 69.0
+  }
+]

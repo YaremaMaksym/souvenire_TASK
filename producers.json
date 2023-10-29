@@ -1,0 +1,62 @@
+[
+  {
+    "id": 0,
+    "name": "Finnish Souvenirs Ltd.",
+    "country": "Finland"
+  },
+  {
+    "id": 1,
+    "name": "Brazilian Treasures",
+    "country": "Brazil"
+  },
+  {
+    "id": 2,
+    "name": "LA Souvenirs",
+    "country": "USA"
+  },
+  {
+    "id": 3,
+    "name": "Nordic Crafts",
+    "country": "Norway"
+  },
+  {
+    "id": 4,
+    "name": "Aussie Gifts Pty. Ltd.",
+    "country": "Australia"
+  },
+  {
+    "id": 5,
+    "name": "German Trinkets GmbH",
+    "country": "Germany"
+  },
+  {
+    "id": 6,
+    "name": "Tokyo Souvenir Co. Ltd.",
+    "country": "Japan"
+  },
+  {
+    "id": 7,
+    "name": "Dutch Delights BV",
+    "country": "Netherlands"
+  },
+  {
+    "id": 8,
+    "name": "Eco-Friendly Souvenirs",
+    "country": "Canada"
+  },
+  {
+    "id": 9,
+    "name": "Mediterranean Mementos",
+    "country": "Greece"
+  },
+  {
+    "id": 12,
+    "name": "",
+    "country": "aboba"
+  },
+  {
+    "id": 10,
+    "name": "aboba",
+    "country": "big"
+  }
+]
