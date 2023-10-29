@@ -15,7 +15,7 @@ public class ExitState implements MenuState {
     }
 
     @Override
-    public void handleInput(String input) {
+    public void handleInput() {
 
     }
 }

@@ -21,15 +21,12 @@ public class MenuManager {
     }
 
     public void run() {
-        Scanner in = new Scanner(System.in);
         while (true) {
             currentState.display();
             if (currentState instanceof ExitState) {
                 break;
             }
-            String choice = in.nextLine();
-            currentState.handleInput(choice);
+            currentState.handleInput();
         }
-        in.close();
     }
 }

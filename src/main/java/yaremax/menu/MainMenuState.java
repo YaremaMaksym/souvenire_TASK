@@ -30,44 +30,45 @@ public class MainMenuState implements MenuState {
     }
 
     @Override
-    public void handleInput(String input) {
-        Scanner in = new Scanner(System.in);
+    public void handleInput() {
+        Scanner scanner = new Scanner(System.in);
+        int choice = Integer.parseInt(scanner.nextLine());
 
-        switch (Integer.parseInt(input)) {
+        switch (choice) {
             case 1 -> menuManager.setCurrentState(menuManager.getProducerSouvenirMenuState());
             case 2 -> {
                 System.out.print("Enter producer id: ");
-                Long producerId = Long.parseLong(in.nextLine());
+                Long producerId = Long.parseLong(scanner.nextLine());
                 souvenirFacade.viewSouvenirsByProducer(producerId);
             }
             case 3 -> {
                 System.out.print("Enter country: ");
-                String country = in.nextLine();
+                String country = scanner.nextLine();
                 souvenirFacade.viewSouvenirsByCountry(country);
             }
             case 4 -> {
                 System.out.print("Enter price limit: ");
                 // todo: handle ex.
-                double priceLimit = Double.parseDouble(in.nextLine());
+                double priceLimit = Double.parseDouble(scanner.nextLine());
                 souvenirFacade.viewProducersByPriceLimit(priceLimit);
             }
             case 5 -> souvenirFacade.viewSouvenirsByProducers();
             case 6 -> {
                 System.out.print("Enter souvenir name: ");
-                String souvenirName = in.nextLine();
+                String souvenirName = scanner.nextLine();
                 System.out.print("Enter souvenir year: ");
                 // todo: handle ex.
-                int year = Integer.parseInt(in.nextLine());
+                int year = Integer.parseInt(scanner.nextLine());
                 souvenirFacade.viewProducersBySouvenir(souvenirName, year);
             }
             case 7 -> souvenirFacade.viewSouvenirsByYears();
             case 8 -> {
                 System.out.print("Enter id of the producer you want to delete: ");
-                Long producerId = Long.parseLong(in.nextLine());
+                Long producerId = Long.parseLong(scanner.nextLine());
                 souvenirFacade.deleteProducerAndSouvenirs(producerId);
             }
             case 9 -> menuManager.setCurrentState(menuManager.getExitState());
-            default -> System.out.println(input + " not a valid option");
+            default -> System.out.println(choice + " not a valid option");
         }
     }
 }
