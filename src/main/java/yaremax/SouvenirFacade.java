@@ -20,7 +20,7 @@ public class SouvenirFacade {
     public void addProducer(Producer producer) throws DuplicateResourceException {
         for (Producer existingProducer : producerDAO.getAllProducers()) {
             if (producer.equals(existingProducer)) {
-                throw new DuplicateResourceException("Producer with name \"" + producer.getName() + "\" already exits");
+                throw new DuplicateResourceException("Виробник з ім'ям \"" + producer.getName() + "\" вже існує");
             }
         }
         producerDAO.addProducer(producer);
@@ -28,12 +28,12 @@ public class SouvenirFacade {
     public void editProducer(Long id, Producer producerWithoutId) {
         Optional<Producer> oldProducerOptional = producerDAO.getProducerById(id);
         if (oldProducerOptional.isEmpty()) {
-            throw new ResourceNotFoundException("Producer with id \"" + id + "\" wasn't found");
+            throw new ResourceNotFoundException("Виробник з id \"" + id + "\" не існує");
         }
 
         for (Producer existingProducer : producerDAO.getAllProducers()) {
             if (producerWithoutId.equals(existingProducer)) {
-                throw new DuplicateResourceException("Producer with this params already exists");
+                throw new DuplicateResourceException("Виробник з такими параметрами вже існує");
             }
         }
 
@@ -51,24 +51,24 @@ public class SouvenirFacade {
     public void addSouvenir(Souvenir souvenir) {
         for (Souvenir existingSouvenir : souvenirDAO.getAllSouvenirs()) {
             if (souvenir.equals(existingSouvenir)) {
-                throw new DuplicateResourceException("Souvenir with this params already exists");
+                throw new DuplicateResourceException("Сувенір з такими параметрами вже існує");
             }
         }
         Optional<Producer> optionalProducer = producerDAO.getProducerById(souvenir.getProducerId());
         if (optionalProducer.isEmpty()) {
-            throw new ResourceNotFoundException("Producer with id \"" + souvenir.getProducerId() + "\" doesn't exists");
+            throw new ResourceNotFoundException("Виробник з id \"" + souvenir.getProducerId() + "\" не існує");
         }
         souvenirDAO.addSouvenir(souvenir);
     }
     public void editSouvenir(Long id, Souvenir souvenirWithoutId) {
         Optional<Souvenir> oldSouvenirOptional = souvenirDAO.getSouvenirById(id);
         if (oldSouvenirOptional.isEmpty()) {
-            throw new ResourceNotFoundException("Souvenir with id \"" + id + "\" wasn't found");
+            throw new ResourceNotFoundException("Сувенір з id \"" + id + "\" не існує");
         }
 
         for (Souvenir existingSouvenir : souvenirDAO.getAllSouvenirs()) {
             if (souvenirWithoutId.equals(existingSouvenir)) {
-                throw new DuplicateResourceException("Souvenir with this params already exists");
+                throw new DuplicateResourceException("Сувенір з такими параметрами вже існує");
             }
         }
 
@@ -117,7 +117,7 @@ public class SouvenirFacade {
                 .collect(Collectors.groupingBy(souvenir -> producerDAO.getProducerById(souvenir.getProducerId()).get()));
 
         for (Map.Entry<Producer, List<Souvenir>> entry : souvenirsByProducer.entrySet()) {
-            System.out.println("\n\nProducer: " + entry.getKey());
+            System.out.println("\n\nВиробник: " + entry.getKey());
             TablePrinter.displaySouvenirsTable(entry.getValue());
         }
     }
@@ -135,7 +135,7 @@ public class SouvenirFacade {
                 .collect(Collectors.groupingBy(souvenir -> souvenir.getReleaseDate().getYear()));
 
         for (Map.Entry<Integer, List<Souvenir>> entry : souvenirsByYears.entrySet()) {
-            System.out.println("\n\n Year: " + entry.getKey());
+            System.out.println("\n\nРік: " + entry.getKey());
             TablePrinter.displaySouvenirsTable(entry.getValue());
         }
     }

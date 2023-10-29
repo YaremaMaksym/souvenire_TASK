@@ -8,8 +8,8 @@ import java.util.List;
 public class TablePrinter {
     public static void displayProducersTable(List<Producer> producers) {
         String idText = "Id";
-        String nameText = "Name";
-        String countryText = "Country";
+        String nameText = "Ім'я";
+        String countryText = "Країна";
 
         int idWidth = idText.length();
         int nameWidth = nameText.length();
@@ -25,9 +25,9 @@ public class TablePrinter {
         String divider = "+" + "-".repeat(idWidth + 2) + "+" + "-".repeat(nameWidth + 2) + "+" + "-".repeat(countryWidth + 2) + "+";
         String rowFormat =  "| %-"+ idWidth + "s | %-" + nameWidth + "s | %-"+ countryWidth + "s |";
 
-        System.out.println("\nProducers Information:");
+        System.out.println("\nВиробники:");
         System.out.println(divider);
-        System.out.printf((headerFormat) + "%n", "Id", "Name", "Country");
+        System.out.printf((headerFormat) + "%n", idText, nameText, countryText);
         System.out.println(divider);
 
         for (Producer producer : producers) {
@@ -39,11 +39,11 @@ public class TablePrinter {
 
     public static void displaySouvenirsTable(List<Souvenir> souvenirs) {
         String idText = "Id";
-        String nameText = "Name";
+        String nameText = "Ім'я";
 //        String producerText = "Producer";
-        String producerIdText = "Producer Id";
-        String releaseDateText = "Release Date";
-        String priceText = "Price";
+        String producerIdText = "Id виробника";
+        String releaseDateText = "Дата випуску";
+        String priceText = "Ціна";
 
         int idWidth = idText.length();
         int nameWidth = nameText.length();
@@ -63,9 +63,9 @@ public class TablePrinter {
         String divider = "+" + "-".repeat(idWidth + 2) + "+" + "-".repeat(nameWidth + 2) + "+" + "-".repeat(producerIdWidth + 2) + "+" + "-".repeat(releaseDateWidth + 2) + "+" + "-".repeat(priceWidth + 2) + "+";
         String rowFormat = "| %-" + idWidth + "d | %-" + nameWidth + "s | %-"+ producerIdWidth + "s | %-"+ releaseDateWidth + "s | %-"+ priceWidth +"s |";
 
-        System.out.println("\nSouvenirs Information:");
+        System.out.println("\nСувеніри:");
         System.out.println(divider);
-        System.out.printf((headerFormat) + "%n", "Id", "Name", "Producer Id", "Release Date", "Price");
+        System.out.printf((headerFormat) + "%n", idText, nameText, producerIdText, releaseDateText, priceText);
         System.out.println(divider);
 
         for (Souvenir souvenir : souvenirs) {

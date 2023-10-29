@@ -26,6 +26,7 @@ public class MenuManager {
             if (currentState instanceof ExitState) {
                 break;
             }
+            System.out.print("Вибір: ");
             currentState.handleInput();
         }
     }

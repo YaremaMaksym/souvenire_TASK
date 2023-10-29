@@ -39,31 +39,31 @@ public class MainMenuState implements MenuState {
             switch (choice) {
                 case 1 -> menuManager.setCurrentState(menuManager.getProducerSouvenirMenuState());
                 case 2 -> {
-                    System.out.print("Enter producer id: ");
+                    System.out.print("Введіть id виробника: ");
                     Long producerId = Long.parseLong(scanner.nextLine());
                     souvenirFacade.viewSouvenirsByProducer(producerId);
                 }
                 case 3 -> {
-                    System.out.print("Enter country: ");
+                    System.out.print("Введіть країну: ");
                     String country = scanner.nextLine();
                     souvenirFacade.viewSouvenirsByCountry(country);
                 }
                 case 4 -> {
-                    System.out.print("Enter price limit: ");
+                    System.out.print("Введіть ціну: ");
                     double priceLimit = Double.parseDouble(scanner.nextLine());
                     souvenirFacade.viewProducersByPriceLimit(priceLimit);
                 }
                 case 5 -> souvenirFacade.viewSouvenirsByProducers();
                 case 6 -> {
-                    System.out.print("Enter souvenir name: ");
+                    System.out.print("Введіть ім'я сувеніру: ");
                     String souvenirName = scanner.nextLine();
-                    System.out.print("Enter souvenir year: ");
+                    System.out.print("Введіть рік сувеніру: ");
                     int year = Integer.parseInt(scanner.nextLine());
                     souvenirFacade.viewProducersBySouvenir(souvenirName, year);
                 }
                 case 7 -> souvenirFacade.viewSouvenirsByYears();
                 case 8 -> {
-                    System.out.print("Enter id of the producer you want to delete: ");
+                    System.out.print("Введіть id виробника якого ви хочете видалити: ");
                     Long producerId = Long.parseLong(scanner.nextLine());
                     souvenirFacade.deleteProducerAndSouvenirs(producerId);
                 }
