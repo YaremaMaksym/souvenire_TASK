@@ -58,8 +58,14 @@ public class ProducerDAO {
         saveAllProducers();
     }
 
-    public void deleteProducerById(Producer producer) {
-        producers.remove(producer);
+    public void updateProducerById (Producer newProducer) {
+        deleteProducerById(newProducer.getId());
+        producers.add(newProducer);
+        saveAllProducers();
+    }
+
+    public void deleteProducerById(Long id) {
+        producers.removeIf(p -> p.getId() == id);
         saveAllProducers();
     }
 

@@ -25,7 +25,24 @@ public class SouvenirFacade {
         }
         producerDAO.addProducer(producer);
     }
-    public void editProducer(Producer producer) {
+    public void editProducer(Long id, Producer producerWithoutId) {
+        Optional<Producer> oldProducerOptional = producerDAO.getProducerById(id);
+        if (oldProducerOptional.isEmpty()) {
+            throw new ResourceNotFoundException("Producer with id \"" + id + "\" wasn't found");
+        }
+
+        for (Producer existingProducer : producerDAO.getAllProducers()) {
+            if (producerWithoutId.equals(existingProducer)) {
+                throw new DuplicateResourceException("Producer with this params already exists");
+            }
+        }
+
+        Producer newProducer = Producer.builder()
+                .id(id)
+                .name(producerWithoutId.getName())
+                .country(producerWithoutId.getCountry())
+                .build();
+        producerDAO.updateProducerById(newProducer);
     }
     public void viewAllProducers() {
         TablePrinter.displayProducersTable(producerDAO.getAllProducers());
@@ -43,7 +60,27 @@ public class SouvenirFacade {
         }
         souvenirDAO.addSouvenir(souvenir);
     }
-    public void editSouvenir(Souvenir souvenir) {}
+    public void editSouvenir(Long id, Souvenir souvenirWithoutId) {
+        Optional<Souvenir> oldSouvenirOptional = souvenirDAO.getSouvenirById(id);
+        if (oldSouvenirOptional.isEmpty()) {
+            throw new ResourceNotFoundException("Souvenir with id \"" + id + "\" wasn't found");
+        }
+
+        for (Souvenir existingSouvenir : souvenirDAO.getAllSouvenirs()) {
+            if (souvenirWithoutId.equals(existingSouvenir)) {
+                throw new DuplicateResourceException("Souvenir with this params already exists");
+            }
+        }
+
+        Souvenir newSouvenir = Souvenir.builder()
+                .id(id)
+                .name(souvenirWithoutId.getName())
+                .producerId(souvenirWithoutId.getProducerId())
+                .releaseDate(souvenirWithoutId.getReleaseDate())
+                .price(souvenirWithoutId.getPrice())
+                .build();
+        souvenirDAO.updateSouvenirById(newSouvenir);
+    }
     public void viewAllSouvenirs() {
         TablePrinter.displaySouvenirsTable(souvenirDAO.getAllSouvenirs());
     }

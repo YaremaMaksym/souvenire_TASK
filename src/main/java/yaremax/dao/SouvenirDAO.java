@@ -58,8 +58,14 @@ public class SouvenirDAO {
         saveAllSouvenirs();
     }
 
-    public void deleteSouvenir(Souvenir souvenir) {
-        souvenirs.remove(souvenir);
+    public void updateSouvenirById (Souvenir newSouvenir) {
+        deleteSouvenir(newSouvenir.getId());
+        souvenirs.add(newSouvenir);
+        saveAllSouvenirs();
+    }
+
+    public void deleteSouvenir(Long id) {
+        souvenirs.removeIf(s -> s.getId() == id);
         saveAllSouvenirs();
     }
 
