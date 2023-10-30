@@ -17,25 +17,31 @@ public class SouvenirFacade {
     private ProducerDAO producerDAO = ProducerDAO.getInstance();
     private SouvenirDAO souvenirDAO = SouvenirDAO.getInstance();
 
-    public void addProducer(Producer producer) throws DuplicateResourceException {
-        for (Producer existingProducer : producerDAO.getAllProducers()) {
-            if (producer.equals(existingProducer)) {
-                throw new DuplicateResourceException("Виробник з ім'ям \"" + producer.getName() + "\" вже існує");
-            }
+    private void checkProducerDuplicate(Producer producer) {
+        boolean isDuplicate = producerDAO.getAllProducers().stream()
+                .anyMatch(producer::equals);
+        if (isDuplicate) {
+            throw new DuplicateResourceException("Виробник з ім'ям \"" + producer.getName() + "\" вже існує");
         }
+    }
+
+    private void checkSouvenirDuplicate(Souvenir souvenir) {
+        boolean isDuplicate = souvenirDAO.getAllSouvenirs().stream()
+                .anyMatch(souvenir::equals);
+        if (isDuplicate) {
+            throw new DuplicateResourceException("Сувенір з такими параметрами вже існує");
+        }
+    }
+
+    public void addProducer(Producer producer) throws DuplicateResourceException {
+        checkProducerDuplicate(producer);
         producerDAO.addProducer(producer);
     }
     public void editProducer(Long id, Producer producerWithoutId) {
-        Optional<Producer> oldProducerOptional = producerDAO.getProducerById(id);
-        if (oldProducerOptional.isEmpty()) {
-            throw new ResourceNotFoundException("Виробник з id \"" + id + "\" не існує");
-        }
+        producerDAO.getProducerById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Виробник з id \"" + id + "\" не існує"));
 
-        for (Producer existingProducer : producerDAO.getAllProducers()) {
-            if (producerWithoutId.equals(existingProducer)) {
-                throw new DuplicateResourceException("Виробник з такими параметрами вже існує");
-            }
-        }
+        checkProducerDuplicate(producerWithoutId);
 
         Producer newProducer = Producer.builder()
                 .id(id)
@@ -49,11 +55,8 @@ public class SouvenirFacade {
     }
 
     public void addSouvenir(Souvenir souvenir) {
-        for (Souvenir existingSouvenir : souvenirDAO.getAllSouvenirs()) {
-            if (souvenir.equals(existingSouvenir)) {
-                throw new DuplicateResourceException("Сувенір з такими параметрами вже існує");
-            }
-        }
+        checkSouvenirDuplicate(souvenir);
+
         Optional<Producer> optionalProducer = producerDAO.getProducerById(souvenir.getProducerId());
         if (optionalProducer.isEmpty()) {
             throw new ResourceNotFoundException("Виробник з id \"" + souvenir.getProducerId() + "\" не існує");
@@ -61,16 +64,10 @@ public class SouvenirFacade {
         souvenirDAO.addSouvenir(souvenir);
     }
     public void editSouvenir(Long id, Souvenir souvenirWithoutId) {
-        Optional<Souvenir> oldSouvenirOptional = souvenirDAO.getSouvenirById(id);
-        if (oldSouvenirOptional.isEmpty()) {
-            throw new ResourceNotFoundException("Сувенір з id \"" + id + "\" не існує");
-        }
+        souvenirDAO.getSouvenirById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Сувенір з id \"" + id + "\" не існує"));
 
-        for (Souvenir existingSouvenir : souvenirDAO.getAllSouvenirs()) {
-            if (souvenirWithoutId.equals(existingSouvenir)) {
-                throw new DuplicateResourceException("Сувенір з такими параметрами вже існує");
-            }
-        }
+        checkSouvenirDuplicate(souvenirWithoutId);
 
         Souvenir newSouvenir = Souvenir.builder()
                 .id(id)
@@ -86,6 +83,9 @@ public class SouvenirFacade {
     }
 
     public void viewSouvenirsByProducer(Long producerId) {
+        producerDAO.getProducerById(producerId)
+                .orElseThrow(() -> new ResourceNotFoundException("Виробник з id \"" + producerId + "\" не існує"));
+
         List<Souvenir> souvenirsByProducer = souvenirDAO.getAllSouvenirs().stream()
                 .filter(souvenir -> souvenir.getProducerId().equals(producerId))
                 .toList();
