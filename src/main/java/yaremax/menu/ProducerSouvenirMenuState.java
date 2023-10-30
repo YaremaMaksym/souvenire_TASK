@@ -38,25 +38,15 @@ public class ProducerSouvenirMenuState implements MenuState {
 
         switch (choice) {
             case 1 -> souvenirFacade.viewAllProducers();
-            case 2 -> {
-                Producer producer = inputProducer();
-                souvenirFacade.addProducer(producer);
-            }
-            case 3 -> {
-                Long id = InputManager.getLong("Введіть id виробника, який ви хочете змінити: ");
-                Producer producer = inputProducer();
-                souvenirFacade.editProducer(id, producer);
-            }
+            case 2 -> souvenirFacade.addProducer(inputProducer());
+            case 3 -> souvenirFacade.editProducer(
+                        InputManager.getLong("Введіть id виробника, який ви хочете змінити: "),
+                        inputProducer());
             case 4 -> souvenirFacade.viewAllSouvenirs();
-            case 5 -> {
-                Souvenir souvenir = inputSouvenir();
-                souvenirFacade.addSouvenir(souvenir);
-            }
-            case 6 -> {
-                Long id = InputManager.getLong("Введіть id сувеніра, який ви хочете змінити: ");
-                Souvenir souvenir = inputSouvenir();
-                souvenirFacade.editSouvenir(id, souvenir);
-            }
+            case 5 -> souvenirFacade.addSouvenir(inputSouvenir());
+            case 6 -> souvenirFacade.editSouvenir(
+                    InputManager.getLong("Введіть id сувеніра, який ви хочете змінити: "),
+                    inputSouvenir());
             case 7 -> menuManager.setCurrentState(menuManager.getMainMenuState());
             default -> System.out.println("🛑🛑🛑 Опції " + choice + " немає в списку 🛑🛑🛑");
         }
