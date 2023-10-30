@@ -136,6 +136,9 @@ public class SouvenirFacade {
     }
 
     public void deleteProducerAndSouvenirs(Long producerId) {
+        producerDAO.getProducerById(producerId)
+                .orElseThrow(() -> new ResourceNotFoundException("Виробник з id \"" + producerId + "\" не існує"));
+
         souvenirDAO.getAllSouvenirs().stream()
                 .filter(souvenir -> souvenir.getProducerId().equals(producerId))
                 .forEach(souvenir -> souvenirDAO.deleteSouvenir(souvenir.getId()));
