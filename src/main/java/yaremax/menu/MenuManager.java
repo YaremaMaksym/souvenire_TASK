@@ -15,11 +15,10 @@ public class MenuManager {
     private final MenuState mainMenuState;
     private final MenuState producerSouvenirMenuState;
     private final MenuState exitState;
-    private final Scanner scanner = new Scanner(System.in);
 
     public MenuManager() {
-        this.mainMenuState = new MainMenuState(this, scanner);
-        this.producerSouvenirMenuState = new ProducerSouvenirMenuState(this, scanner);
+        this.mainMenuState = new MainMenuState(this);
+        this.producerSouvenirMenuState = new ProducerSouvenirMenuState(this);
         this.exitState = new ExitState(this);
         this.currentState = mainMenuState;
     }
@@ -30,14 +29,9 @@ public class MenuManager {
             if (currentState instanceof ExitState) {
                 break;
             }
-            System.out.print("Вибір: ");
             try {
                 currentState.handleInput();
-            } catch (NumberFormatException e) {
-                System.out.println("🛑🛑🛑 Цей ввід неможливо перевести в число 🛑🛑🛑");
-            } catch (DateTimeParseException e) {
-                System.out.println("🛑🛑🛑 Цей ввід неможливо перевести в дату 🛑🛑🛑");
-            } catch (DuplicateResourceException | ResourceNotFoundException e) {
+            }  catch (DuplicateResourceException | ResourceNotFoundException e) {
                 System.out.println("🛑🛑🛑 " + e.getMessage() + " 🛑🛑🛑");
             }
         }

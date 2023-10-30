@@ -1,17 +1,16 @@
 package yaremax.menu;
 
 import yaremax.SouvenirFacade;
+import yaremax.util.InputManager;
 
 import java.util.Scanner;
 
 public class MainMenuState implements MenuState {
     private final MenuManager menuManager;
     private final SouvenirFacade souvenirFacade = new SouvenirFacade();
-    private final Scanner scanner;
 
-    public MainMenuState(MenuManager menuManager, Scanner scanner) {
+    public MainMenuState(MenuManager menuManager) {
         this.menuManager = menuManager;
-        this.scanner = scanner;
     }
 
     @Override
@@ -33,42 +32,22 @@ public class MainMenuState implements MenuState {
 
     @Override
     public void handleInput() {
-        int choice = Integer.parseInt(scanner.nextLine());
+        int choice = InputManager.getInt("Введіть ваш вибір: ");
 
         switch (choice) {
             case 1 -> menuManager.setCurrentState(menuManager.getProducerSouvenirMenuState());
-            case 2 -> {
-                System.out.print("Введіть id виробника: ");
-                Long producerId = Long.parseLong(scanner.nextLine());
-                souvenirFacade.viewSouvenirsByProducer(producerId);
-            }
-            case 3 -> {
-                System.out.print("Введіть країну: ");
-                String country = scanner.nextLine();
-                souvenirFacade.viewSouvenirsByCountry(country);
-            }
-            case 4 -> {
-                System.out.print("Введіть ціну: ");
-                double priceLimit = Double.parseDouble(scanner.nextLine());
-                souvenirFacade.viewProducersByPriceLimit(priceLimit);
-            }
+            case 2 -> souvenirFacade.viewSouvenirsByProducer(InputManager.getLong("Введіть id виробника: "));
+            case 3 -> souvenirFacade.viewSouvenirsByCountry(InputManager.getString("Введіть країну: "));
+            case 4 -> souvenirFacade.viewProducersByPriceLimit(InputManager.getDouble("Введіть ціну: "));
             case 5 -> souvenirFacade.viewSouvenirsByProducers();
-            case 6 -> {
-                System.out.print("Введіть ім'я сувеніру: ");
-                String souvenirName = scanner.nextLine();
-                System.out.print("Введіть рік сувеніру: ");
-                int year = Integer.parseInt(scanner.nextLine());
-                souvenirFacade.viewProducersBySouvenir(souvenirName, year);
-            }
+            case 6 -> souvenirFacade.viewProducersBySouvenir(
+                    InputManager.getString("Введіть ім'я сувеніру: "),
+                    InputManager.getInt("Введіть рік сувеніру: ")
+            );
             case 7 -> souvenirFacade.viewSouvenirsByYears();
-            case 8 -> {
-                System.out.print("Введіть id виробника якого ви хочете видалити: ");
-                Long producerId = Long.parseLong(scanner.nextLine());
-                souvenirFacade.deleteProducerAndSouvenirs(producerId);
-            }
+            case 8 -> souvenirFacade.deleteProducerAndSouvenirs(InputManager.getLong("Введіть id виробника якого ви хочете видалити: "));
             case 9 -> menuManager.setCurrentState(menuManager.getExitState());
             default -> System.out.println("🛑🛑🛑 Опції " + choice + " немає в списку запропонованих 🛑🛑🛑");
         }
-
     }
 }

@@ -3,20 +3,16 @@ package yaremax.menu;
 import yaremax.SouvenirFacade;
 import yaremax.dto.Producer;
 import yaremax.dto.Souvenir;
+import yaremax.util.InputManager;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Locale;
-import java.util.Scanner;
 
 public class ProducerSouvenirMenuState implements MenuState {
     private final MenuManager menuManager;
     private final SouvenirFacade souvenirFacade = new SouvenirFacade();
-    private final Scanner scanner;
 
-    public ProducerSouvenirMenuState(MenuManager menuManager, Scanner scanner) {
+    public ProducerSouvenirMenuState(MenuManager menuManager) {
         this.menuManager = menuManager;
-        this.scanner = scanner;
     }
 
     @Override
@@ -38,7 +34,7 @@ public class ProducerSouvenirMenuState implements MenuState {
 
     @Override
     public void handleInput() {
-        int choice = Integer.parseInt(scanner.nextLine());
+        int choice = InputManager.getInt("Введіть ваш вибір: ");
 
         switch (choice) {
             case 1 -> souvenirFacade.viewAllProducers();
@@ -47,8 +43,7 @@ public class ProducerSouvenirMenuState implements MenuState {
                 souvenirFacade.addProducer(producer);
             }
             case 3 -> {
-                System.out.print("Введіть id виробника, який ви хочете змінити: ");
-                Long id = Long.parseLong(scanner.nextLine());
+                Long id = InputManager.getLong("Введіть id виробника, який ви хочете змінити: ");
                 Producer producer = inputProducer();
                 souvenirFacade.editProducer(id, producer);
             }
@@ -58,8 +53,7 @@ public class ProducerSouvenirMenuState implements MenuState {
                 souvenirFacade.addSouvenir(souvenir);
             }
             case 6 -> {
-                System.out.print("Введіть id сувеніра, який ви хочете змінити: ");
-                Long id = Long.parseLong(scanner.nextLine());
+                Long id = InputManager.getLong("Введіть id сувеніра, який ви хочете змінити: ");
                 Souvenir souvenir = inputSouvenir();
                 souvenirFacade.editSouvenir(id, souvenir);
             }
@@ -69,11 +63,8 @@ public class ProducerSouvenirMenuState implements MenuState {
     }
 
     private Producer inputProducer() {
-        System.out.print("Введіть ім'я виробника: ");
-        String name = scanner.nextLine();
-
-        System.out.print("Введіть країну виробника: ");
-        String country = scanner.nextLine();
+        String name = InputManager.getString("Введіть ім'я виробника: ");
+        String country = InputManager.getString("Введіть країну виробника: ");
 
         return Producer.builder()
                 .name(name)
@@ -82,18 +73,10 @@ public class ProducerSouvenirMenuState implements MenuState {
     }
 
     private Souvenir inputSouvenir() {
-        System.out.print("Введіть ім'я сувеніру: ");
-        String name = scanner.nextLine();
-
-        System.out.print("Введіть id виробника: ");
-        Long producerId = Long.parseLong(scanner.nextLine());
-
-        System.out.print("Введіть дату створення (дд-мм-рррр): ");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy").withLocale(Locale.UK);
-        LocalDate releaseDate = LocalDate.parse(scanner.nextLine(), formatter);
-
-        System.out.print("Введіть ціну сувеніру: ");
-        Double price = Double.parseDouble(scanner.nextLine());
+        String name = InputManager.getString("Введіть ім'я сувеніру: ");
+        Long producerId = InputManager.getLong("Введіть id виробника: ");
+        LocalDate releaseDate = InputManager.getDate("Введіть дату створення (дд-мм-рррр): ");
+        Double price = InputManager.getDouble("Введіть ціну сувеніру: ");
 
         return Souvenir.builder()
                 .name(name)

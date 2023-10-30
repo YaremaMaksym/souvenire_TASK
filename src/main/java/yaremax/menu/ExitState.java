@@ -11,7 +11,7 @@ public class ExitState implements MenuState {
 
     @Override
     public void display() {
-        System.out.println("Exiting...");
+        System.out.println("Завершення роботи...");
     }
 
     @Override
