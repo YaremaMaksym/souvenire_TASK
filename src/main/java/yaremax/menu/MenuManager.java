@@ -2,7 +2,10 @@ package yaremax.menu;
 
 import lombok.Getter;
 import lombok.Setter;
+import yaremax.exception.DuplicateResourceException;
+import yaremax.exception.ResourceNotFoundException;
 
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 @Getter
@@ -27,7 +30,15 @@ public class MenuManager {
                 break;
             }
             System.out.print("Вибір: ");
-            currentState.handleInput();
+            try {
+                currentState.handleInput();
+            } catch (NumberFormatException e) {
+                System.out.println("🛑🛑🛑 Цей ввід неможливо перевести в число 🛑🛑🛑");
+            } catch (DateTimeParseException e) {
+                System.out.println("🛑🛑🛑 Цей ввід неможливо перевести в дату 🛑🛑🛑");
+            } catch (DuplicateResourceException | ResourceNotFoundException e) {
+                System.out.println("🛑🛑🛑 " + e.getMessage() + " 🛑🛑🛑");
+            }
         }
     }
 }
