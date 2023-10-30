@@ -50,13 +50,28 @@
     "country": "Greece"
   },
   {
-    "id": 12,
-    "name": "",
-    "country": "aboba"
+    "id": 10,
+    "name": "Parisian Memories",
+    "country": "France"
   },
   {
-    "id": 10,
-    "name": "aboba",
-    "country": "big"
+    "id": 11,
+    "name": "Safari Souvenirs",
+    "country": "South Africa"
+  },
+  {
+    "id": 12,
+    "name": "Egyptian Artifacts Ltd.",
+    "country": "Egypt"
+  },
+  {
+    "id": 13,
+    "name": "Aussie Gifts Pty. Ltd.",
+    "country": "Australia"
+  },
+  {
+    "id": 14,
+    "name": "Swiss Chocolate Souvenirs",
+    "country": "Switzerland"
   }
 ]
