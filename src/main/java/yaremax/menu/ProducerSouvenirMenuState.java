@@ -3,21 +3,20 @@ package yaremax.menu;
 import yaremax.SouvenirFacade;
 import yaremax.dto.Producer;
 import yaremax.dto.Souvenir;
-import yaremax.exception.DuplicateResourceException;
-import yaremax.exception.ResourceNotFoundException;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.Locale;
 import java.util.Scanner;
 
 public class ProducerSouvenirMenuState implements MenuState {
     private final MenuManager menuManager;
     private final SouvenirFacade souvenirFacade = new SouvenirFacade();
+    private final Scanner scanner;
 
-    public ProducerSouvenirMenuState(MenuManager menuManager) {
+    public ProducerSouvenirMenuState(MenuManager menuManager, Scanner scanner) {
         this.menuManager = menuManager;
+        this.scanner = scanner;
     }
 
     @Override
@@ -39,30 +38,29 @@ public class ProducerSouvenirMenuState implements MenuState {
 
     @Override
     public void handleInput() {
-        Scanner scanner = new Scanner(System.in);
         int choice = Integer.parseInt(scanner.nextLine());
 
         switch (choice) {
             case 1 -> souvenirFacade.viewAllProducers();
             case 2 -> {
-                Producer producer = inputProducer(scanner);
+                Producer producer = inputProducer();
                 souvenirFacade.addProducer(producer);
             }
             case 3 -> {
                 System.out.print("Введіть id виробника, який ви хочете змінити: ");
                 Long id = Long.parseLong(scanner.nextLine());
-                Producer producer = inputProducer(scanner);
+                Producer producer = inputProducer();
                 souvenirFacade.editProducer(id, producer);
             }
             case 4 -> souvenirFacade.viewAllSouvenirs();
             case 5 -> {
-                Souvenir souvenir = inputSouvenir(scanner);
+                Souvenir souvenir = inputSouvenir();
                 souvenirFacade.addSouvenir(souvenir);
             }
             case 6 -> {
                 System.out.print("Введіть id сувеніра, який ви хочете змінити: ");
                 Long id = Long.parseLong(scanner.nextLine());
-                Souvenir souvenir = inputSouvenir(scanner);
+                Souvenir souvenir = inputSouvenir();
                 souvenirFacade.editSouvenir(id, souvenir);
             }
             case 7 -> menuManager.setCurrentState(menuManager.getMainMenuState());
@@ -70,7 +68,7 @@ public class ProducerSouvenirMenuState implements MenuState {
         }
     }
 
-    private static Producer inputProducer(Scanner scanner) {
+    private Producer inputProducer() {
         System.out.print("Введіть ім'я виробника: ");
         String name = scanner.nextLine();
 
@@ -83,7 +81,7 @@ public class ProducerSouvenirMenuState implements MenuState {
                 .build();
     }
 
-    private static Souvenir inputSouvenir(Scanner scanner) {
+    private Souvenir inputSouvenir() {
         System.out.print("Введіть ім'я сувеніру: ");
         String name = scanner.nextLine();
 
@@ -95,7 +93,7 @@ public class ProducerSouvenirMenuState implements MenuState {
         LocalDate releaseDate = LocalDate.parse(scanner.nextLine(), formatter);
 
         System.out.print("Введіть ціну сувеніру: ");
-        Double price = scanner.nextDouble();
+        Double price = Double.parseDouble(scanner.nextLine());
 
         return Souvenir.builder()
                 .name(name)

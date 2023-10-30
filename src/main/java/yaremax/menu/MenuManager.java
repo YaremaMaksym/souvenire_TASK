@@ -15,10 +15,11 @@ public class MenuManager {
     private final MenuState mainMenuState;
     private final MenuState producerSouvenirMenuState;
     private final MenuState exitState;
+    private final Scanner scanner = new Scanner(System.in);
 
     public MenuManager() {
-        this.mainMenuState = new MainMenuState(this);
-        this.producerSouvenirMenuState = new ProducerSouvenirMenuState(this);
+        this.mainMenuState = new MainMenuState(this, scanner);
+        this.producerSouvenirMenuState = new ProducerSouvenirMenuState(this, scanner);
         this.exitState = new ExitState(this);
         this.currentState = mainMenuState;
     }

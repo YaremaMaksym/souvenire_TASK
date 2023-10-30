@@ -1,16 +1,17 @@
 package yaremax.menu;
 
 import yaremax.SouvenirFacade;
-import yaremax.exception.ResourceNotFoundException;
 
 import java.util.Scanner;
 
 public class MainMenuState implements MenuState {
     private final MenuManager menuManager;
     private final SouvenirFacade souvenirFacade = new SouvenirFacade();
+    private final Scanner scanner;
 
-    public MainMenuState(MenuManager menuManager) {
+    public MainMenuState(MenuManager menuManager, Scanner scanner) {
         this.menuManager = menuManager;
+        this.scanner = scanner;
     }
 
     @Override
@@ -32,7 +33,6 @@ public class MainMenuState implements MenuState {
 
     @Override
     public void handleInput() {
-        Scanner scanner = new Scanner(System.in);
         int choice = Integer.parseInt(scanner.nextLine());
 
         switch (choice) {
