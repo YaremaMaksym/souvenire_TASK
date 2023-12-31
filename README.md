@@ -1,4 +1,4 @@
-This project implements Java CLI app for managing souvenirs and producers. Storing data in Json files\
+This project implements Java CLI app for managing souvenirs and producers. Storing data in Json files
 
 Here are some of the main features of the app:
 * CRUD operations for souvenirs and producers
